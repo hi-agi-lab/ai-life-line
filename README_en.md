@@ -4,7 +4,7 @@
 <img src="images/hero_banner.jpg" alt="AI Vision banner: AI monitoring for manholes, flooding and streetlights on existing CCTV" width="100%"/>
 
 **Give city lifelines an AI eye — manholes, flooding and streetlights,
-watched by open-vocabulary models on existing CCTV.**
+watched by a detection–embedding–VLM pipeline on existing CCTV.**
 
 ![python](https://img.shields.io/badge/python-3.8%2B-blue)
 <!-- On release, replace OWNER/REPO with the real repo path and copy docs/promotion/ci.yml to .github/workflows/ci.yml -->
@@ -47,11 +47,11 @@ where dual-source agreement yields high confidence.
 
 | Model | Role | What it answers |
 |-------|------|-----------------|
-| **AI-Detect** (open-vocabulary detection) | L1 presence | "Is the manhole still visible?" |
+| **AI-Detect** (open-vocabulary detection) | L1 presence | "Is the registered manhole still visible?" |
 | **AI-Recognize** (prompt-free proposals + region embeddings) | L2 semantics | "Did this ROI *semantically* change vs. its registered baseline?" |
 | **AI-Reference** (Qwen3VL grounding) | adjudication | "Is that patch really flood water — or a wet-road reflection?" |
 
-The interesting finding from our real-image fixture: **appearance-level and
+The interesting finding from our real-world fixture: **appearance-level and
 semantic-level change detectors are complementary**. A broken cover scores
 high on appearance distance but low on semantic distance (a broken cover is
 still a cover); a buried cover scores high on both. `decide_change_v2` turns
@@ -69,10 +69,10 @@ form a pipeline rather than three isolated islands.
 - Night frames are out-of-protocol for the flooding channel by design (§4.3
   night stand-down), same as human patrols.
 - Fixture numbers (n=6–26 per scenario) are *capability evidence*, not
-  production acceptance. §8.2-scale staged collection is the next step.
+  production acceptance. Staged collection at the §8.2 scale is the next step.
 
-We think publishing the failure analysis alongside the green numbers is the
-more useful kind of open source.
+We think publishing the failure analysis alongside the green numbers is
+what a responsible release looks like.
 
 ## Quickstart
 
@@ -151,9 +151,9 @@ lifeline_guard/
 ```
 -->
 
-## License & data notice
+## Licensing & data notice
 
-This project is commercial software. The real-image fixture is **not
+This project is commercial software. The real-world fixture is **not
 redistributed**;
 `acceptance_manifest_v2.json` documents every case and images must be
 sourced locally for reproduction.
