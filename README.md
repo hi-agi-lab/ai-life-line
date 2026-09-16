@@ -1,7 +1,7 @@
 # ai-life-line
 <div align="center">
 
-<img src="docs/promotion/images/hero_banner.jpg" alt="AI Vision — 城市生命线智能监测平台首屏" width="100%"/>
+<img src="images/hero_banner.jpg" alt="AI Vision — 城市生命线智能监测平台首屏" width="100%"/>
 
 **给城市生命线装上 AI 眼睛——用存量摄像头看住井盖、积水与路灯。**
 

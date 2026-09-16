@@ -1,7 +1,7 @@
 # ai-life-line
 <div align="center">
 
-<img src="docs/promotion/images/hero_banner.jpg" alt="AI Vision banner: AI monitoring for manholes, flooding and streetlights on existing CCTV" width="100%"/>
+<img src="images/hero_banner.jpg" alt="AI Vision banner: AI monitoring for manholes, flooding and streetlights on existing CCTV" width="100%"/>
 
 **Give city lifelines an AI eye — manholes, flooding and streetlights,
 watched by open-vocabulary models on existing CCTV.**
