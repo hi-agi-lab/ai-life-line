@@ -126,8 +126,10 @@ flowchart LR
 | Manhole L1 image-level detection | 17 | >0.85 | >0.85 | PASS |
 | Flooding (cold-start protocol) | 16 | >0.85 | >0.80 | PASS |
 
+<!-- TODO: uncomment when the docs land with the first release
 Details, per-image scores, the failure analysis and root-cause notes:
 `PITCH.md` · `lifeline_guard/CHANGELOG.md` (provided with the first release)
+-->
 
 <!-- TODO: uncomment this section when the code lands
 ## Repo layout
