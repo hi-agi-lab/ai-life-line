@@ -1,11 +1,7 @@
 # ai-life-line
 <div align="center">
 
-**lifeline-guard — 城市生命线智能监测平台**
-
-<!-- TODO: 首屏大图（images/hero_banner.jpg）就绪后取消注释
-<img src="images/hero_banner.jpg" alt="lifeline-guard 城市生命线智能监测平台首屏" width="100%"/>
--->
+<img src="docs/promotion/images/hero_banner.jpg" alt="AI Vision — 城市生命线智能监测平台首屏" width="100%"/>
 
 **给城市生命线装上 AI 眼睛——用存量摄像头看住井盖、积水与路灯。**
 
@@ -32,7 +28,7 @@
 ## 为什么做
 
 城市拥有成千上万的路口摄像头，但一个井盖丢了、一段路淹了、一排灯灭了，
-往往还要等市民打电话投诉。**lifeline-guard** 把存量摄像头变成三类民生
+往往还要等市民打电话投诉。**AI Vision** 把存量摄像头变成三类民生
 事件的一级传感器——井盖缺失位移、路面积水内涝、路灯故障——并把摄像头
 看到的与 IoT 传感、市民上报在分钟桶融合总线上配对，双源命中即高置信。
 

@@ -1,11 +1,7 @@
 # ai-life-line
 <div align="center">
 
-**lifeline-guard — AI monitoring for city lifelines**
-
-<!-- TODO: uncomment when images/hero_banner.jpg is ready
-<img src="images/hero_banner.jpg" alt="lifeline-guard banner: AI monitoring for manholes, flooding and streetlights on existing CCTV" width="100%"/>
--->
+<img src="docs/promotion/images/hero_banner.jpg" alt="AI Vision banner: AI monitoring for manholes, flooding and streetlights on existing CCTV" width="100%"/>
 
 **Give city lifelines an AI eye — manholes, flooding and streetlights,
 watched by open-vocabulary models on existing CCTV.**
@@ -35,7 +31,7 @@ Mask and clue are real segmenter output; the dry/wet pair is illustrative.*
 ## Why
 
 Cities already own thousands of cameras. Yet a missing manhole cover is still
-usually reported by a citizen phone call. **lifeline-guard** turns existing
+usually reported by a citizen phone call. **AI Vision** turns existing
 CCTV into a first-class sensor for three civic events — displaced manhole
 covers, road flooding, and failed streetlights — and pairs what the camera
 sees with IoT sensors and citizen reports on a minute-bucket fusion bus,
