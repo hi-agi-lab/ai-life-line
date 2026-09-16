@@ -9,7 +9,7 @@
 <!-- 发布时把 OWNER/REPO 换成实际仓库路径, 并把 docs/promotion/ci.yml 复制到 .github/workflows/ci.yml -->
 ![ci](https://img.shields.io/badge/CI-pending-lightgrey)
 ![deps](https://img.shields.io/badge/core%20deps-numpy%20%2B%20opencv-orange)
-![license](https://img.shields.io/badge/license-Apache--2.0-blue)
+![license](https://img.shields.io/badge/license-Commercial-blue)
 
 **[English](README_en.md)** | 简体中文
 
@@ -138,7 +138,7 @@ lifeline_guard/
 
 ## License 与数据声明
 
-代码以 **Apache License 2.0** 发布（见 [`LICENSE`](LICENSE)）。真实验收集
+本项目是商用软件。真实验收集
 **不随仓库分发**；`acceptance_manifest_v2.json` 记录全部 case，复现需按
 清单本地采集图片。
 

@@ -10,7 +10,7 @@ watched by open-vocabulary models on existing CCTV.**
 <!-- On release, replace OWNER/REPO with the real repo path and copy docs/promotion/ci.yml to .github/workflows/ci.yml -->
 ![ci](https://img.shields.io/badge/CI-pending-lightgrey)
 ![deps](https://img.shields.io/badge/core%20deps-numpy%20%2B%20opencv-orange)
-![license](https://img.shields.io/badge/license-Apache--2.0-blue)
+![license](https://img.shields.io/badge/license-Commercial-blue)
 
 English | **[简体中文](README.md)**
 
@@ -149,8 +149,8 @@ lifeline_guard/
 
 ## License & data notice
 
-Code is released under the **Apache License 2.0** (see
-[`LICENSE`](LICENSE)). The real-image fixture is **not redistributed**;
+This project is commercial software. The real-image fixture is **not
+redistributed**;
 `acceptance_manifest_v2.json` documents every case and images must be
 sourced locally for reproduction.
 
