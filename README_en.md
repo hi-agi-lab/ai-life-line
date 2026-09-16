@@ -43,7 +43,7 @@ sees with IoT sensors and citizen reports on a minute-bucket fusion bus.
 |-------|------|-----------------|
 | **AI-Detect** (open-vocabulary detection) | L1 presence | "Is the manhole still visible?" |
 | **AI-Recognize** (prompt-free proposals + region embeddings) | L2 semantics | "Did this ROI *semantically* change vs. its registered baseline?" |
-| **AI-Detect-Ref** (Qwen3VL grounding) | adjudication | "Is that patch really flood water — or a wet-road reflection?" |
+| **AI-Reference** (Qwen3VL grounding) | adjudication | "Is that patch really flood water — or a wet-road reflection?" |
 
 The interesting finding from our real-image fixture: **appearance-level and
 semantic-level change detectors are complementary**. A broken cover scores
@@ -131,7 +131,7 @@ lifeline_guard/
 ├── streetlight.py      # luma patrol + circuit-level group-outage + SCADA cross
 ├── embedders.py        # Normed / Uni embeddings + per-point adaptive thresholds
 ├── model_gateway.py    # unified model loading, caching, telemetry
-├── review_ref.py       # AI-Detect-Ref VLM adjudication (FR-DS)
+├── review_ref.py       # AI-Reference VLM adjudication (FR-DS)
 ├── platform.py         # signed ingest server + minute-bucket fusion
 ├── adapters.py         # IoT (I-class) / citizen-report (S-class) adapters
 ├── runner.py           # edge runtime: config → patrol → outbox → push

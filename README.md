@@ -40,7 +40,7 @@
 |------|------|-----------|
 | **AI-Detect**（开放词汇检测） | L1 在位检出 | "登记的井盖现在还能被看见吗？" |
 | **AI-Recognize**（免提示提议 + 区域嵌入） | L2 语义 | "这块 ROI 相对登记基线**语义**上变了吗？" |
-| **AI-Detect-Ref**（Qwen3VL grounding） | 裁决 | "那片真的是积水——还是湿路面反光？" |
+| **AI-Reference**（Qwen3VL grounding） | 裁决 | "那片真的是积水——还是湿路面反光？" |
 
 真实图集上最有意思的发现：**外观距离与语义距离是互补的，不是冗余的**。
 破损井盖外观剧变但语义近似（破损了也还是井盖）；掩埋/替换则双高。
@@ -123,7 +123,7 @@ lifeline_guard/
 ├── streetlight.py      # 亮度巡检 + 回路级成片熄灭 + SCADA 交叉
 ├── embedders.py        # Normed / Uni 嵌入 + 点位自适应阈值
 ├── model_gateway.py    # 统一模型加载、缓存与遥测
-├── review_ref.py       # AI-Detect-Ref VLM 复核裁决 (FR-DS)
+├── review_ref.py       # AI-Reference VLM 复核裁决 (FR-DS)
 ├── platform.py         # 签名 ingest 服务 + 分钟桶合并
 ├── adapters.py         # IoT (I 类) / 市民上报 (S 类) 适配器
 ├── runner.py           # 边缘运行时: 配置 → 轮巡 → outbox → 推送
