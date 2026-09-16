@@ -62,7 +62,7 @@ form a pipeline rather than three isolated islands.
 ## Honest limits (read this first)
 
 - Wet-asphalt sky reflections vs. shallow flooding are **optically ambiguous
-  in a single frame** — for every model we tried, including a 2B VLM
+  in a single frame** — for every model we tried, including 2B/4B/9B VLMs
   (AI-Reference alone: P=0.647 on wet-asphalt negatives). Production resolves
   this with a registered dry baseline (temporal evidence): synthetic paired
   eval n=120 → R and P both > 0.85.
