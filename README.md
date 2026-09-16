@@ -118,6 +118,7 @@ flowchart LR
 逐图得分、失败分析与根因定位：
 `PITCH.md` · `lifeline_guard/CHANGELOG.md`（随首个发布版本提供）
 
+<!-- TODO: 代码入库后取消注释本节
 ## 仓库结构
 
 ```
@@ -135,6 +136,7 @@ lifeline_guard/
 ├── acceptance.py       # 摆拍集评估, §8.4 报告 CLI
 └── deploy/             # Dockerfile / compose / 示例配置
 ```
+-->
 
 ## License 与数据声明
 

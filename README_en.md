@@ -129,6 +129,7 @@ flowchart LR
 Details, per-image scores, the failure analysis and root-cause notes:
 `PITCH.md` · `lifeline_guard/CHANGELOG.md` (provided with the first release)
 
+<!-- TODO: uncomment this section when the code lands
 ## Repo layout
 
 ```
@@ -146,6 +147,7 @@ lifeline_guard/
 ├── acceptance.py       # staged-set evaluation, §8.4 report CLI
 └── deploy/             # Dockerfile / compose / example config
 ```
+-->
 
 ## License & data notice
 
