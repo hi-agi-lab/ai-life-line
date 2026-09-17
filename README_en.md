@@ -185,25 +185,7 @@ flowchart LR
 We believe publishing failure analysis alongside green numbers is what
 open source should look like.
 
-## 11. Repository layout
-
-```
-lifeline_guard/
-├── manhole.py          # Registered-baseline change detection (L1xL2 truth table)
-├── waterlogging.py     # Physical water segmentation + dry-baseline gating
-├── streetlight.py      # Luma patrol + circuit-level outage + SCADA cross-check
-├── embedders.py        # Normed / Uni embeddings + per-point adaptive thresholds
-├── model_gateway.py    # Unified model loading, caching and telemetry
-├── review_ref.py       # AI-Detect-Ref VLM review adjudication (FR-DS)
-├── platform.py         # Signed ingest + minute-bucket fusion
-├── adapters.py         # IoT (I) / citizen-report (S) adapters
-├── runner.py           # Edge runtime: config → patrol → outbox → push
-├── store.py            # SQLite: ledger/audit/outbox/state
-├── acceptance.py       # Fixture evaluation, §8.4 report CLI
-└── deploy/             # Dockerfile / compose / example config
-```
-
-## 12. License & data statement
+## 11. License & data statement
 
 Code license TBD (see [`PITCH.md`](PITCH.md) §4). The real-world fixture is
 **not distributed with the repository**;

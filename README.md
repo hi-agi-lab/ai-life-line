@@ -169,25 +169,7 @@ flowchart LR
 
 我们认为把失败分析跟全绿数字一起发布，才是开源该有的样子。
 
-## 11. 仓库结构
-
-```
-lifeline_guard/
-├── manhole.py          # 登记式基线变化检测 (L1xL2 真值表)
-├── waterlogging.py     # 物理水面分割 + 干态基线门控 + 水位尺
-├── streetlight.py      # 亮度巡检 + 回路级成片熄灭 + SCADA 交叉
-├── embedders.py        # Normed / Uni 嵌入 + 点位自适应阈值
-├── model_gateway.py    # 统一模型加载、缓存与遥测
-├── review_ref.py       # AI-Detect-Ref VLM 复核裁决 (FR-DS)
-├── platform.py         # 签名 ingest 服务 + 分钟桶合并
-├── adapters.py         # IoT (I 类) / 市民上报 (S 类) 适配器
-├── runner.py           # 边缘运行时: 配置 → 轮巡 → outbox → 推送
-├── store.py            # SQLite: 台账/审计/outbox/状态
-├── acceptance.py       # 摆拍集评估, §8.4 报告 CLI
-└── deploy/             # Dockerfile / compose / 示例配置
-```
-
-## 12. License 与数据声明
+## 11. License 与数据声明
 
 代码 license 待定（见 [`PITCH.md`](PITCH.md) §4）。真实图集**不随仓库
 分发**；`acceptance_manifest_v2.json` 记录全部 case，复现需按清单本地
