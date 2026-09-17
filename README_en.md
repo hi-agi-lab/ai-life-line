@@ -1,80 +1,127 @@
-# ai-life-line
 <div align="center">
 
-<img src="images/hero_banner.jpg" alt="AI Vision banner: AI monitoring for manholes, flooding and streetlights on existing CCTV" width="100%"/>
+<img src="images/hero_banner.jpg" alt="lifeline-guard" width="100%"/>
 
-**Give city lifelines an AI eye — manholes, flooding and streetlights,
-watched by a detection–embedding–VLM pipeline on existing CCTV.**
+**Video analysis for city lifelines: manhole covers, road flooding, and
+streetlight failures detected automatically on existing CCTV.**
 
 ![python](https://img.shields.io/badge/python-3.8%2B-blue)
-<!-- On release, replace OWNER/REPO with the real repo path and copy docs/promotion/ci.yml to .github/workflows/ci.yml -->
 ![ci](https://img.shields.io/badge/CI-pending-lightgrey)
 ![deps](https://img.shields.io/badge/core%20deps-numpy%20%2B%20opencv-orange)
-![license](https://img.shields.io/badge/license-Commercial-blue)
+![tests](https://img.shields.io/badge/tests-262%20passed-brightgreen)
+![license](https://img.shields.io/badge/license-TBD-lightgrey)
 
-English | **[简体中文](README.md)**
+English | **[简体中文](README_github_zh.md)**
 
-<!-- TODO: uncomment when images/demo_flooding.gif is ready
-<img src="images/demo_flooding.gif" alt="Flooding channel: dry baseline → rainstorm → physical segmentation → risk3 clue" width="720px"/>
+<img src="images/demo_flooding.gif" alt="Flooding lane: dry baseline → storm → physical segmentation → risk3 clue" width="760px"/>
 
-*The flooding channel in four beats: registered dry baseline → rainstorm →
-physical water segmentation (real output) → risk3 clue to the platform.
-Mask and clue are real segmenter output; the dry/wet pair is illustrative.*
--->
+*Figure: flooding lane in four beats (mask and clue are real segmenter
+output; dry/wet frames are an illustrative pair, declared in the footer) —
+register the dry baseline → storm arrives → physical water segmentation →
+risk3 clue submitted.*
 
 </div>
 
 ---
 
-> 🚧 **Docs-first**: code, the evaluation harness and the fixture manifest will land with the first release; file names and § references below follow the planned layout.
+## 1. Background
 
-## Why
+Cities operate thousands of CCTV streams, yet a missing manhole cover, a
+flooded underpass, or a failed streetlight is still typically discovered
+via manual patrols or citizen complaints. Four structural gaps:
 
-Cities already own thousands of cameras. Yet a missing manhole cover is still
-usually reported by a citizen phone call. **AI Vision** turns existing
-CCTV into a first-class sensor for three civic events — displaced manhole
-covers, road flooding, and failed streetlights — and pairs what the camera
-sees with IoT sensors and citizen reports on a minute-bucket fusion bus,
-where dual-source agreement yields high confidence.
+| Gap | Description |
+|-----|-------------|
+| Coverage | Fixed camera angles and human patrols cannot cover every asset at every hour |
+| Latency | Event-to-work-order latency is measured in days, with safety and PR exposure |
+| False positives | Rain, reflections and shadows break legacy analytics almost completely |
+| Single-source doubt | Grading from video alone trades false dispatches against missed events |
 
-## The three-model pipeline
+## 2. Key capabilities
 
-| Scene | Annotated output |
-|-------|------------------|
-| Flooding | ![flooding](images/scene_flooding.jpg) |
-| Manhole | ![manhole](images/scene_manhole.jpg) |
-| Streetlight | ![streetlight](images/scene_streetlight.jpg) |
+| # | Capability | Description |
+|---|------------|-------------|
+| 01 | Existing-camera reuse | No new sensors; patrol-style analysis over the existing GA-T1400 video intake |
+| 02 | One runtime, three scenarios | Manhole change (registered baselines), road flooding (physical segmentation + dry-baseline gating), streetlight failure (ledger + luma baseline) share one patrol/push/review chain |
+| 03 | Dual-source grading | Video clues are paired with IoT sensors and citizen reports in a minute-bucket fusion bus; dual-source hits dispatch at high confidence |
+| 04 | Weather-linked uprating | Dual-source rain warnings uprate flooding points to 1–5 fps and fall back automatically |
 
-| Model | Role | What it answers |
-|-------|------|-----------------|
-| **AI-Detect** (open-vocabulary detection) | L1 presence | "Is the registered manhole still visible?" |
-| **AI-Recognize** (prompt-free proposals + region embeddings) | L2 semantics | "Did this ROI *semantically* change vs. its registered baseline?" |
-| **AI-Reference** (Qwen3VL grounding) | adjudication | "Is that patch really flood water — or a wet-road reflection?" |
+## 3. Three-model pipeline
 
-The interesting finding from our real-world fixture: **appearance-level and
-semantic-level change detectors are complementary**. A broken cover scores
-high on appearance distance but low on semantic distance (a broken cover is
-still a cover); a buried cover scores high on both. `decide_change_v2` turns
-this into an explicit truth table, and the ambiguous appearance-high /
-semantic-low branch is exactly where the VLM adjudicates — the three models
-form a pipeline rather than three isolated islands.
+| Model | Role | Question answered |
+| --- | --- | --- |
+| AI-Detect (open-vocabulary detection) | L1 presence | "Is the registered manhole still visible?" |
+| AI-Detect-Uni (prompt-free proposals + region embeddings) | L2 semantics | "Has this ROI semantically changed vs the registered baseline?" |
+| AI-Detect-Ref (Qwen3VL grounding) | Adjudication | "Is that really flooding — or a wet-road reflection?" |
 
-## Honest limits (read this first)
+The three form a pipeline, not three islands: appearance distance and
+semantic distance are **complementary, not redundant** — a broken manhole
+changes appearance drastically but stays semantically a manhole, while
+burial/replacement scores high on both. `decide_change_v2` encodes this as
+an explicit truth table, and the ambiguous branch ("appearance high,
+semantics low") goes to AI-Detect-Ref for a verdict.
 
-- Wet-asphalt sky reflections vs. shallow flooding are **optically ambiguous
-  in a single frame** — for every model we tried, including 2B/4B/9B VLMs
-  (AI-Reference alone: P=0.647 on wet-asphalt negatives). Production resolves
-  this with a registered dry baseline (temporal evidence): synthetic paired
-  eval n=120 → R and P both > 0.85.
-- Night frames are out-of-protocol for the flooding channel by design (§4.3
-  night stand-down), same as human patrols.
-- Fixture numbers (n=6–26 per scenario) are *capability evidence*, not
-  production acceptance. Staged collection at the §8.2 scale is the next step.
+## 4. Technical highlights
 
-We think publishing the failure analysis alongside the green numbers is
-what a responsible release looks like.
+- **Registered baseline comparison** — manholes are registered per-ledger
+  (L1 presence × L2 semantic-change truth table); only registered assets
+  are patrolled, and housings/poles are never registered.
+- **Physical water segmentation + dry-baseline gating** — flooding
+  segmentation uses physical contiguity, gated by the registered dry
+  baseline as temporal evidence (see §10, the wet-asphalt boundary).
+- **Circuit-level outage detection** — streetlights are registered
+  per-globe with luma baselines; single-dim and group-outage patterns are
+  separated and cross-checked against SCADA.
+- **Idempotent reporting & secure ingest** — SQLite outbox with at-least-once
+  push, HMAC-signed ingest with replay protection, minute-bucket fusion.
+- **§8.4 acceptance CLI** — one command produces the per-scenario R/P
+  report with automatic threshold verdicts.
 
-## Quickstart
+## 5. Gallery
+
+All outputs below are real pipeline output (masks, boxes and ledger ROIs
+unmodified):
+
+| Scenario | Output |
+|------|---------|
+| Road flooding (physical segmentation) | ![Flooding](images/scene_flooding.jpg) |
+| Manhole change (baseline vs half-fallen) | ![Manhole](images/scene_manhole.jpg) |
+| Streetlight failure (dark clue) | ![Streetlight](images/scene_streetlight.jpg) |
+
+Four-panel overview (61 images / 55 cases):
+
+<img src="images/demo_montage.jpg" alt="Three-scenario overview" width="100%"/>
+
+## 6. End-to-end walkthrough
+
+A flooding event (timestamps illustrative; decisions and fusion are the
+real logic):
+
+| Time | Stage | Description |
+|------|-------|-------------|
+| T-3 d | Dry baseline | Point W1 registers its dry appearance; low-frequency patrol |
+| T 0:00 | Rain warning | Meteorological warning uprates W1 to 1–5 fps |
+| T 0:06 | Segmentation | Physical mask coverage crosses threshold; risk3 clue raised |
+| T 0:07 | Dual-source pair | IoT level sensor hits the same minute bucket → high confidence |
+| T 0:08 | Dispatch | Clue dispatched to the maintenance squad; outcome written back |
+
+## 7. Benchmarks
+
+Scope: 61 real-scenario images, 55 evaluation cases (Baidu-sourced,
+human-labeled; n=6–26 per scenario).
+
+| Scenario | n | R | P | §8.4 gate | Result |
+|------|---|---|---|-----------|------|
+| Manhole change (paired) | 6 | >0.85 | >0.85 | both | Pass |
+| Manhole L1 image-level detection | 17 | >0.85 | >0.85 | both | Pass |
+| Flooding (cold-start protocol) | 16 | >0.85 | >0.80 | both | Pass |
+
+| Metric | Value | Scope |
+|------|------|------|
+| Engineering | 262 unit tests | full suite runs without GPU (real-image regression auto-skips) |
+| Failure story | wet-asphalt reflection film vs shallow flooding: three method families all fooled (Ref P=0.647) | see §10 and [`PITCH.md`](PITCH.md) |
+
+## 8. Get started
 
 ```python
 import cv2
@@ -91,72 +138,74 @@ for frame in [img, img]:                                  # 2-cycle confirm
 print([(c.subtype, c.risk_level, c.source_ref) for c in clues])
 ```
 
-Full pipeline (ingest → fusion → outbox → VLM review) lives in
-`lifeline_guard/runner.py` with a JSON config, and the evaluation harness in
-`lifeline_guard/acceptance.py`:
+Full pipeline (ingest → minute-bucket fusion → outbox → VLM review) lives
+in [`runner.py`](lifeline_guard/runner.py) (JSON-config driven); the
+evaluation tool is [`acceptance.py`](lifeline_guard/acceptance.py):
 
 ```bash
 python -m lifeline_guard.acceptance \
     --manifest lifeline_guard/tests/real_images/acceptance_manifest_v2.json
 ```
 
-## Architecture
+## 9. Architecture
 
+<img src="images/architecture_en.png" alt="AI Vision system architecture: edge runtime and platform" width="100%"/>
+
+<!-- TODO: edit the mermaid source below and re-render to update the diagram
 ```mermaid
 flowchart LR
     subgraph EDGE[Edge runtime]
-        SRC[PatrolStreamSource<br/>RTSP keep-alive + reconnect] --> PIPE[CameraPipeline<br/>health gate]
-        PIPE --> ENG[Manhole / Water / Lamp engines]
-        ENG --> OBX[(SQLite outbox<br/>idempotent clues)]
+        SRC[PatrolStreamSource\nRTSP + reconnect alerts] --> PIPE[CameraPipeline\nhealth gating]
+        PIPE --> ENG[Manhole / Flooding / Lamp engines]
+        ENG --> OBX[(SQLite outbox\nidempotent clues)]
     end
     subgraph PLATFORM[Platform]
-        ING[IngestServer<br/>HMAC + replay guard] --> FUS[Minute-bucket fusion<br/>video × IoT × citizen reports]
+        ING[IngestServer\nHMAC + replay protection] --> FUS[Minute-bucket fusion\nvideo x sensor x orders]
         FUS --> DISP[High-confidence dispatch]
     end
     OBX -->|signed push| ING
-    WX[Weather alerts<br/>primary/standby] -->|upfreq| ENG
-    SENS[IoT / 12345 civic hotline adapters] --> ING
+    WX[Weather warnings\ndual-source failover] -->|uprate| ENG
+    SENS[IoT / 12345 adapters] --> ING
 ```
-
-## Results on the real-world fixture
-
-| Scenario | n | R | P | §8.4 gate |
-|----------|---|---|---|-----------|
-| Manhole change detection (pairs) | 6 | >0.85 | >0.85 | PASS |
-| Manhole L1 image-level detection | 17 | >0.85 | >0.85 | PASS |
-| Flooding (cold-start protocol) | 16 | >0.85 | >0.80 | PASS |
-
-<!-- TODO: uncomment when the docs land with the first release
-Details, per-image scores, the failure analysis and root-cause notes:
-`PITCH.md` · `lifeline_guard/CHANGELOG.md` (provided with the first release)
 -->
 
-<!-- TODO: uncomment this section when the code lands
-## Repo layout
+## 10. Scope and limitations
+
+- **Wet-asphalt reflection film vs shallow flooding is optically and
+  semantically identical in a single frame** — physical rules, open
+  vocabulary and a 2B VLM were all fooled (Ref P=0.647 on wet-asphalt
+  negatives). The distinguishing information is not in that frame but in
+  time: the registered dry baseline (temporal evidence); a paired synthetic
+  experiment (n=120) reaches R, P > 0.85.
+- **Night frames are out of protocol for the flooding lane** (§4.3 night
+  patrol downgrade) — same as human patrols.
+- **This fixture (n=6–26 per scenario) is capability evidence, not
+  production acceptance**; the §8.2-scale controlled capture is next.
+
+We believe publishing failure analysis alongside green numbers is what
+open source should look like.
+
+## 11. Repository layout
 
 ```
 lifeline_guard/
-├── manhole.py          # registered-baseline change detection (L1×L2 truth table)
-├── waterlogging.py     # physical water segmentation + baseline gating + gauge
-├── streetlight.py      # luma patrol + circuit-level group-outage + SCADA cross
-├── embedders.py        # Normed / Recognize embeddings + per-point adaptive thresholds
-├── model_gateway.py    # unified model loading, caching, telemetry
-├── review_ref.py       # AI-Reference VLM adjudication (FR-DS)
-├── platform.py         # signed ingest server + minute-bucket fusion
-├── adapters.py         # IoT (I-class) / citizen-report (S-class) adapters
-├── runner.py           # edge runtime: config → patrol → outbox → push
+├── manhole.py          # Registered-baseline change detection (L1xL2 truth table)
+├── waterlogging.py     # Physical water segmentation + dry-baseline gating
+├── streetlight.py      # Luma patrol + circuit-level outage + SCADA cross-check
+├── embedders.py        # Normed / Uni embeddings + per-point adaptive thresholds
+├── model_gateway.py    # Unified model loading, caching and telemetry
+├── review_ref.py       # AI-Detect-Ref VLM review adjudication (FR-DS)
+├── platform.py         # Signed ingest + minute-bucket fusion
+├── adapters.py         # IoT (I) / citizen-report (S) adapters
+├── runner.py           # Edge runtime: config → patrol → outbox → push
 ├── store.py            # SQLite: ledger/audit/outbox/state
-├── acceptance.py       # staged-set evaluation, §8.4 report CLI
+├── acceptance.py       # Fixture evaluation, §8.4 report CLI
 └── deploy/             # Dockerfile / compose / example config
 ```
--->
 
-## Licensing & data notice
+## 12. License & data statement
 
-This project is commercial software. The real-world fixture is **not
-redistributed**;
-`acceptance_manifest_v2.json` documents every case and images must be
-sourced locally for reproduction.
-
-> Note: §x.x references point to the project's internal specification, to be
-> published with the first release.
+Code license TBD (see [`PITCH.md`](PITCH.md) §4). The real-world fixture is
+**not distributed with the repository**;
+`acceptance_manifest_v2.json` records every case — reproduce locally by
+capturing images per the manifest.
