@@ -139,23 +139,6 @@ python -m lifeline_guard.acceptance \
 
 <img src="images/architecture_cn.png" alt="AI Vision 系统架构：边缘运行时与平台侧" width="100%"/>
 
-<!-- TODO: 如需调整架构图，编辑下方 mermaid 源后重新出图
-```mermaid
-flowchart LR
-    subgraph EDGE[边缘运行时]
-        SRC[PatrolStreamSource\nRTSP 常连 + 断流重连] --> PIPE[CameraPipeline\n健康门控]
-        PIPE --> ENG[井盖 / 积水 / 灯巡引擎]
-        ENG --> OBX[(SQLite outbox\n幂等线索)]
-    end
-    subgraph PLATFORM[平台侧]
-        ING[IngestServer\nHMAC 签名 + 防重放] --> FUS[分钟桶合并\n视频 x 传感 x 工单]
-        FUS --> DISP[高置信直派]
-    end
-    OBX -->|签名推送| ING
-    WX[气象预警\n主备倒换] -->|升频| ENG
-    SENS[IoT / 12345 适配器] --> ING
-```
--->
 
 ## 10. 范围与限制
 

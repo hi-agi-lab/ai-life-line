@@ -151,23 +151,7 @@ python -m lifeline_guard.acceptance \
 
 <img src="images/architecture_en.png" alt="AI Vision system architecture: edge runtime and platform" width="100%"/>
 
-<!-- TODO: edit the mermaid source below and re-render to update the diagram
-```mermaid
-flowchart LR
-    subgraph EDGE[Edge runtime]
-        SRC[PatrolStreamSource\nRTSP + reconnect alerts] --> PIPE[CameraPipeline\nhealth gating]
-        PIPE --> ENG[Manhole / Flooding / Lamp engines]
-        ENG --> OBX[(SQLite outbox\nidempotent clues)]
-    end
-    subgraph PLATFORM[Platform]
-        ING[IngestServer\nHMAC + replay protection] --> FUS[Minute-bucket fusion\nvideo x sensor x orders]
-        FUS --> DISP[High-confidence dispatch]
-    end
-    OBX -->|signed push| ING
-    WX[Weather warnings\ndual-source failover] -->|uprate| ENG
-    SENS[IoT / 12345 adapters] --> ING
-```
--->
+
 
 ## 10. Scope and limitations
 
