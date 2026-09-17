@@ -173,7 +173,7 @@ flowchart LR
 
 - **Wet-asphalt reflection film vs shallow flooding is optically and
   semantically identical in a single frame** — physical rules, open
-  vocabulary and a 2B VLM were all fooled (Ref P=0.647 on wet-asphalt
+  vocabulary and 2B/4B/9B VLMs were all fooled (Ref P=0.647 on wet-asphalt
   negatives). The distinguishing information is not in that frame but in
   time: the registered dry baseline (temporal evidence); a paired synthetic
   experiment (n=120) reaches R, P > 0.85.
