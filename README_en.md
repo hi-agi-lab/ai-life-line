@@ -51,15 +51,15 @@ via manual patrols or citizen complaints. Four structural gaps:
 | Model | Role | Question answered |
 | --- | --- | --- |
 | AI-Detect (open-vocabulary detection) | L1 presence | "Is the registered manhole still visible?" |
-| AI-Detect-Uni (prompt-free proposals + region embeddings) | L2 semantics | "Has this ROI semantically changed vs the registered baseline?" |
-| AI-Detect-Ref (Qwen3VL grounding) | Adjudication | "Is that really flooding — or a wet-road reflection?" |
+| AI-Recognize (prompt-free proposals + region embeddings) | L2 semantics | "Has this ROI semantically changed vs the registered baseline?" |
+| AI-Reference (Qwen3VL grounding) | Adjudication | "Is that really flooding — or a wet-road reflection?" |
 
 The three form a pipeline, not three islands: appearance distance and
 semantic distance are **complementary, not redundant** — a broken manhole
 changes appearance drastically but stays semantically a manhole, while
 burial/replacement scores high on both. `decide_change_v2` encodes this as
 an explicit truth table, and the ambiguous branch ("appearance high,
-semantics low") goes to AI-Detect-Ref for a verdict.
+semantics low") goes to AI-Reference for a verdict.
 
 ## 4. Technical highlights
 
