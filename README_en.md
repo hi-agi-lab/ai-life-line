@@ -9,7 +9,7 @@ streetlight failures detected automatically on existing CCTV.**
 ![ci](https://img.shields.io/badge/CI-pending-lightgrey)
 ![deps](https://img.shields.io/badge/core%20deps-numpy%20%2B%20opencv-orange)
 ![tests](https://img.shields.io/badge/tests-262%20passed-brightgreen)
-![license](https://img.shields.io/badge/license-TBD-lightgrey)
+![license](https://img.shields.io/badge/license-Commercial-blue)
 
 English | **[简体中文](README_github_zh.md)**
 
@@ -187,7 +187,7 @@ open source should look like.
 
 ## 11. License & data statement
 
-Code license TBD (see [`PITCH.md`](PITCH.md) §4). The real-world fixture is
+The code is commercial software. The real-world fixture is
 **not distributed with the repository**;
 `acceptance_manifest_v2.json` records every case — reproduce locally by
 capturing images per the manifest.

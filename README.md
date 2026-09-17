@@ -9,7 +9,7 @@
 ![ci](https://img.shields.io/badge/CI-pending-lightgrey)
 ![deps](https://img.shields.io/badge/core%20deps-numpy%20%2B%20opencv-orange)
 ![tests](https://img.shields.io/badge/tests-262%20passed-brightgreen)
-![license](https://img.shields.io/badge/license-TBD-lightgrey)
+![license](https://img.shields.io/badge/license-Commercial-blue)
 
 **[English](README_github.md)** | 简体中文
 
@@ -171,6 +171,6 @@ flowchart LR
 
 ## 11. License 与数据声明
 
-代码 license 待定（见 [`PITCH.md`](PITCH.md) §4）。真实图集**不随仓库
+代码为商用软件。真实图集**不随仓库
 分发**；`acceptance_manifest_v2.json` 记录全部 case，复现需按清单本地
 采集图片。
