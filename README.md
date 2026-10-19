@@ -11,6 +11,9 @@
 ![tests](https://img.shields.io/badge/tests-262%20passed-brightgreen)
 ![license](https://img.shields.io/badge/license-Commercial-blue)
 
+[![powered by AutoVision](https://img.shields.io/badge/powered%20by-AutoVision-0FDC78)](https://github.com/hi-agi-lab/AutoVision)
+[![pypi](https://img.shields.io/pypi/v/autovision-framework)](https://pypi.org/project/autovision-framework/)
+
 **[English](README_github.md)** | 简体中文
 
 <img src="images/demo_flooding.gif" alt="积水通道: 干态基线 → 暴雨 → 物理分割 → risk3 线索" width="760px"/>
@@ -157,3 +160,7 @@ python -m lifeline_guard.acceptance \
 代码为商用软件。真实图集**不随仓库
 分发**；`acceptance_manifest_v2.json` 记录全部 case，复现需按清单本地
 采集图片。
+
+---
+
+本方案的检测底座、流式推理运行时与导出链路由开源框架 [AutoVision](https://github.com/hi-agi-lab/AutoVision) 提供（`pip install autovision-framework`）；接入设计见[《行业方案接入》](https://hi-agi-lab.github.io/AutoVision/ecosystem/)。

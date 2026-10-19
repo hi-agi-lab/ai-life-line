@@ -11,6 +11,9 @@ streetlight failures detected automatically on existing CCTV.**
 ![tests](https://img.shields.io/badge/tests-262%20passed-brightgreen)
 ![license](https://img.shields.io/badge/license-Commercial-blue)
 
+[![powered by AutoVision](https://img.shields.io/badge/powered%20by-AutoVision-0FDC78)](https://github.com/hi-agi-lab/AutoVision)
+[![pypi](https://img.shields.io/pypi/v/autovision-framework)](https://pypi.org/project/autovision-framework/)
+
 English | **[简体中文](README_github_zh.md)**
 
 <img src="images/demo_flooding.gif" alt="Flooding lane: dry baseline → storm → physical segmentation → risk3 clue" width="760px"/>
@@ -175,3 +178,7 @@ The code is commercial software. The real-world fixture is
 **not distributed with the repository**;
 `acceptance_manifest_v2.json` records every case — reproduce locally by
 capturing images per the manifest.
+
+---
+
+The detection backbone, streaming inference runtime, and export chain of this solution are provided by the open-source framework [AutoVision](https://github.com/hi-agi-lab/AutoVision) (`pip install autovision-framework`); see the [integration design](https://hi-agi-lab.github.io/AutoVision/ecosystem/) for details.
